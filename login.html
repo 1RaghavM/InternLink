@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{%block title%}Login{%endblock%}
+
+{%block content%}
+<div class="w3-container w3-content" style="max-width: 400px; margin-top: 80px; text-align: center;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flashed-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <h2>Login</h2>
+    <form id="login-form" method="POST" action="{{ url_for('login') }}" style="margin-top: 20px;">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" class="w3-input" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" class="w3-input" required><br><br>
+
+        <input type="submit" value="Login" class="w3-button w3-round">
+    </form>
+</div>
+{%endblock%}

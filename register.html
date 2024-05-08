@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-content" style="max-width: 800px; margin-top: 80px; text-align: center;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flashed-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <h2>Register</h2>
+    <div class="registration-type">
+        <a href="{{ url_for('register_intern') }}" class="w3-button w3-round">Register As Intern</a>
+        <a href="{{ url_for('register_admin') }}" class="w3-button w3-round w3-grey">Register As Admin</a>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Add Internship{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-content" style="max-width: 800px; margin-top: 80px; text-align: center;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flashed-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <h2>Add New Internship</h2>
+    <br>
+    <form method="POST" action="{{ url_for('add_organization') }}" class="w3-row-padding">
+        <div class="input-container">
+            <label for="company_name">Company Name:</label><br>
+            <input type="text" id="company_name" name="company_name" class="w3-input w3-round" required><br>
+
+            <label for="website">Website:</label><br>
+            <input type="text" id="website" name="website" class="w3-input w3-round" required><br>
+
+            <label for="street_address">Street Address:</label><br>
+            <input type="text" id="street_address" name="street_address" class="w3-input w3-round" required><br>
+
+            <label for="city">City:</label><br>
+            <input type="text" id="city" name="city" class="w3-input w3-round" required><br>
+
+            <label for="state">State:</label><br>
+            <input type="text" id="state" name="state" class="w3-input w3-round" required><br>
+
+            <label for="zip_code">Zip Code:</label><br>
+            <input type="text" id="zip_code" name="zip_code" class="w3-input w3-round" required><br>
+
+            <label for="phone">Phone:</label><br>
+            <input type="tel" id="phone" name="phone" class="w3-input w3-round" required><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" class="w3-input w3-round" required><br>
+
+            <label for="internship_mentor">Internship Mentor:</label><br>
+            <input type="text" id="internship_mentor" name="internship_mentor" class="w3-input w3-round" required><br>
+
+            <label for="internship_topic">Internship Topic:</label><br>
+            <input type="text" id="internship_topic" name="internship_topic" class="w3-input w3-round" required><br>
+
+            <label for="majors">Related Majors:</label><br>
+            <div id="majors">
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Aerospace Engineering">Aerospace Engineering</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Automotive Engineering">Automotive Engineering</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Business & Finance">Business & Finance</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Commercial Arts">Commercial Arts</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Computer Science">Computer Science</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Culinary">Culinary</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Digital Media">Digital Media</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Fashion">Fashion</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Law">Law</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Medical">Medical</button>
+                <button type="button" class="w3-button w3-round w3-margin-bottom major-button" data-selected="false" data-value="Research/Other">Research/Other</button>
+            </div>
+            <input type="hidden" id="selected_majors" name="selected_majors">
+        </div>
+
+        <input type="submit" value="Add" class="w3-button w3-round w3-margin-top">
+    </form>
+</div>
+
+<style>
+    .major-button {
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    .major-button.selected {
+        background-color: #808080;
+        color: #ffffff;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const majorButtons = document.querySelectorAll(".major-button");
+        const selectedMajorsInput = document.getElementById('selected_majors');
+
+        majorButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const isSelected = button.getAttribute("data-selected") === "true";
+                button.setAttribute("data-selected", isSelected ? "false" : "true");
+                button.classList.toggle("selected");
+                updateSelectedMajors();
+            });
+        });
+
+        function updateSelectedMajors() {
+            const selectedMajors = Array.from(majorButtons)
+                .filter(button => button.getAttribute("data-selected") === "true")
+                .map(button => button.getAttribute("data-value"));
+            selectedMajorsInput.value = selectedMajors.join(',');
+        }
+    });
+</script>
+{% endblock %}
